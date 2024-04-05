@@ -99,8 +99,6 @@ export async function barChart(
         ],
     };
 
-    console.log(borderColors);
-
     const chartConfig = {
         type: "bar",
         data: data,
