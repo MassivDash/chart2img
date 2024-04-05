@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "target": "es6",
+    "module": "CommonJS",
+    "strict": true,
     "outDir": "dist",
     "rootDir": ".",
-    "sourceMap": true,
-    "strict": false
-  }
+    "baseUrl": "./",
+    // no paths in azure functions
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "src/**/*.test.ts"],
+  
 }

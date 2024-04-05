@@ -4,7 +4,9 @@ import {
     HttpResponseInit,
     InvocationContext,
 } from "@azure/functions";
-import { createCanvas } from "canvas";
+import { extractColors, createCanvas } from "../utils";
+import { barChartOptions } from '../charts';
+import { Chart, ChartConfiguration, ChartItem, Plugin } from "chart.js/auto";
 
 export async function barChart(
     request: HttpRequest,
@@ -12,17 +14,10 @@ export async function barChart(
 ): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
-    // usual import results in typescript mismatch
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const Chart = require("chart.js/auto");
 
-    const width = 400;
-    const height = 400;
+    const { canvas, ctx } = createCanvas(400, 400);
 
-    const canvas = createCanvas(width, height);
-    const ctx = canvas.getContext("2d");
-
-    const plugin = {
+    const plugin: Plugin = {
         id: "customCanvasBackgroundColor",
         beforeDraw: (chart, _args, options) => {
             const { ctx } = chart;
@@ -36,53 +31,11 @@ export async function barChart(
 
     const plugins = [plugin];
 
-    const options = {
-        plugins: {
-            datalabels: { display: false },
-            legend: { display: false },
-            customCanvasBackgroundColor: {
-                color: "white",
-            },
-        },
-        indexAxis: "y",
-        responsive: true,
-        scales: {
-            y: {
-                offset: true,
-                ticks: {
-                    display: true,
-                },
-                grid: {
-                    display: false,
-                    drawTicks: false,
-                },
-                border: {
-                    display: false,
-                },
-            },
-            x: {
-                suggestedMin: 0,
-                suggestedMax: 15,
-                border: {
-                    display: false,
-                },
-            },
-        },
-    };
-
     const labels = request.query.get("labels")?.split(",");
     const dataValues = request.query.get("data")?.split(",").map(Number);
 
     const backgroundColorsRaw = request.query.get("backgroundColors");
     const borderColorsRaw = request.query.get("borderColors");
-
-    function extractColors(colorsRaw: string | undefined): string[] | undefined {
-        if (colorsRaw?.includes("rgba")) {
-            return colorsRaw.match(/rgba\(([^)]+)\)/g);
-        } else {
-            return colorsRaw?.split(",");
-        }
-    }
 
     const backgroundColors = extractColors(backgroundColorsRaw);
     const borderColors = extractColors(borderColorsRaw);
@@ -102,11 +55,11 @@ export async function barChart(
     const chartConfig = {
         type: "bar",
         data: data,
-        options: options,
+        options: barChartOptions,
         plugins,
     };
 
-    new Chart(ctx, chartConfig);
+    new Chart(ctx as unknown as ChartItem, chartConfig as ChartConfiguration);
 
     const pngBuffer = canvas.toBuffer("image/png");
 

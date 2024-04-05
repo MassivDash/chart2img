@@ -9,7 +9,7 @@
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
-    "test": "echo \"No tests yet...\"",
+    "test": "vitest run",
     "prepare": "husky",
     "lint": "eslint . --ext .ts"
   },
@@ -19,7 +19,7 @@
     "chart.js": "4.4.2"
   },
   "devDependencies": {
-    "@types/node": "18.x",
+    "@types/node": "^18.19.29",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "azure-functions-core-tools": "^4.x",
@@ -32,6 +32,8 @@
     "husky": "^9.0.11",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.0",
-    "typescript": "^5.4.4"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.4",
+    "vitest": "^1.4.0"
   }
 }
