@@ -1,4 +1,4 @@
-import { HttpRequest, InvocationContext } from '@azure/functions';
+import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { barChart } from './barChart';
 import { describe, it, expect, vi } from 'vitest';
 
@@ -22,7 +22,7 @@ describe('barChart', () => {
         };
 
         // Call the barChart function
-        const response = await barChart(request as unknown as HttpRequest, context as unknown as InvocationContext);
+        let response: HttpResponseInit | null = await barChart(request as unknown as HttpRequest, context as unknown as InvocationContext);
 
         // Assert the response status and body
         expect(response.status).toBe(200);
@@ -32,6 +32,7 @@ describe('barChart', () => {
         request.query.clear();
         request.headers.clear();
         context.log.mockClear();
+        response = null;
     });
 
     it('should return a response with status 500 if request query does not have any values', async () => {
@@ -48,7 +49,7 @@ describe('barChart', () => {
         };
 
         // Call the barChart function
-        const response = await barChart(request as unknown as HttpRequest, context as unknown as InvocationContext);
+        let response: HttpResponseInit | null = await barChart(request as unknown as HttpRequest, context as unknown as InvocationContext);
 
         // Assert the response status
         expect(response.status).toBe(500);
@@ -57,5 +58,6 @@ describe('barChart', () => {
         request.query.clear();
         request.headers.clear();
         context.log.mockClear();
+        response = null;
     });
 });

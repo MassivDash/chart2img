@@ -79,6 +79,7 @@ export async function barChart(
             body: pngBuffer,
             headers: request.headers,
         };
+        
     } catch (error) {
         context.log(error);
         return {
