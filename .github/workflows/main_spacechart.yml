@@ -40,5 +40,5 @@ jobs:
         with:
           app-name: 'spacechart'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5EFF7F3EAA9A431482182EF5F46AE49A }}
+          publish-profile: ${{ secrets.PUBLISHPROFILE }}
           respect-funcignore: true
