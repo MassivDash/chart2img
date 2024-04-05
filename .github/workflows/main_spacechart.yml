@@ -42,4 +42,4 @@ jobs:
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5EFF7F3EAA9A431482182EF5F46AE49A }}
-          AzureWebJobsStorage: "https://chart2img.blob.core.windows.net/test"
+          enable-oryx-build: true
