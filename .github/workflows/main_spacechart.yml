@@ -25,6 +25,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Install Dependencies
+        shell: bash
+        run: |
+            sudo apt update
+            sudo apt install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev librsvg2-dev
+
       - name: 'Resolve Project Dependencies Using Npm'
         shell: bash
         run: |
