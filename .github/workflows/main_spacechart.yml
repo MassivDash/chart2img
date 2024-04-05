@@ -35,8 +35,7 @@ jobs:
         shell: bash
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          npm install --build-from-source
-          npm run build --if-present
+          npm ci
           npm run coverage --if-present
           popd
       - name: 'Report Coverage'
