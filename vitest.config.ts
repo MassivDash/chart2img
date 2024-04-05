@@ -3,8 +3,7 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
     test: {
         environment: 'node',
-        maxWorkers: 1,
-        minWorkers: 1,
+        pool: 'forks',
         coverage: {
             // you can include other reporters, but 'json-summary' is required, json is recommended
             reporter: ['text', 'json-summary', 'json'],
