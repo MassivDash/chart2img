@@ -75,11 +75,11 @@ export async function barChart(
   const backgroundColorsRaw = request.query.get("backgroundColors");
   const borderColorsRaw = request.query.get("borderColors");
 
-  function extractColors(ColorsRaw: string | undefined): string[] | undefined {
-    if (backgroundColorsRaw?.includes("rgba")) {
-      return backgroundColorsRaw.match(/rgba\(([^)]+)\)/g);
+  function extractColors(colorsRaw: string | undefined): string[] | undefined {
+    if (colorsRaw?.includes("rgba")) {
+      return colorsRaw.match(/rgba\(([^)]+)\)/g);
     } else {
-      return backgroundColorsRaw?.split(",");
+      return colorsRaw?.split(",");
     }
   }
 
@@ -98,7 +98,7 @@ export async function barChart(
     ],
   };
 
-  console.log(data);
+  console.log(borderColors);
 
   const chartConfig = {
     type: "bar",
